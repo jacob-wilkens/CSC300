@@ -9,6 +9,11 @@ class linkedList {
     public:
        linkedList();
        void addFront(int payload);
-
+       void display();
+       int getFront();
+       int removeFront();
+       void addEnd(int payload);
+       int getEnd();
+       int removeEnd();
 };
 #endif
