@@ -42,7 +42,7 @@ int linkedList::removeFront() {
 void linkedList::addEnd(int payload) {
     node* newNode = new node(payload); //new node
 
-    if(this->count == 1) {
+    if(this->count == 0) {
         this->head = newNode;
     } else {
         node* currNode = this->head;//used to navigate list
@@ -60,15 +60,10 @@ void linkedList::addEnd(int payload) {
 }
 
 int linkedList::getEnd() {
-    int endValue = 0;
+    int endValue = -1;
     node* currNode = this->head;
-
-    if(this->count == 1) {
-        endValue = currNode->getPayload();
-        return endValue;
-
-    } else {
-        for(int i = 1; i <= this->count; i++) {
+    
+    for(int i = 1; i <= this->count; i++) {
             
         if(i == count) {
             endValue = currNode->getPayload();
@@ -77,38 +72,27 @@ int linkedList::getEnd() {
         currNode = currNode->getNextNode();
             
         }
-
-     }
-     return endValue;
+    return endValue;    
 
 }
 
 int linkedList::removeEnd() {
      
-    int endValue = 0;
+    int endValue = -1;
     node* currNode = this->head;
 
-    if(this->count == 1) {
-        endValue = currNode->getPayload();
-        delete currNode;
-        this->count--;
-        return endValue;
-        
-     } else {
-        for(int i = 1; i <= this->count; i++) {
+    for(int i = 1; i <= this->count; i++) {
             
-            if(i == count) {
-                endValue = currNode->getPayload();
-                delete currNode;
-                this->count--;
-                return endValue;
-            }
-
-            currNode = currNode->getNextNode();
-            
+        if(i == count) {
+            endValue = currNode->getPayload();
+            delete currNode;
+            this->count--;
+            return endValue;
         }
 
-     }
-     return endValue;
+        currNode = currNode->getNextNode();
+            
+        }
+    return endValue;
 
 }
