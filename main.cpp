@@ -4,11 +4,15 @@
 
 using namespace std;
 
-int main(int argc, const char * argv[])
+int main()
 {   
-    linkedList* myList = new linkedList();
-    myList->addFront(5);
-    delete myList;
-
-    return 0;
+    linkedList* ll = new linkedList();
+    ll->addFront(4);
+    ll->addFront(3);
+    ll->addAtIndex(1,5);
+    ll->display();
+    int val = ll->removeIndex(1);
+    std::cout << val << " This was deleted"<< "\n";
+    ll->display();
+    delete ll;
 }
