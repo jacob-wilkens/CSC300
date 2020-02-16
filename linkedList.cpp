@@ -133,10 +133,8 @@ void linkedList::addAtIndex(int index, int payload) {
 
     if(this->count == 0 || index == 0) {
         this->addFront(payload);
-        this->count++;
     } else if (index >= this->count) {
         this->addEnd(payload);
-        this->count++;
     } else {
         node* newNode = new node(payload);
         node* currNode = this->head;
@@ -181,12 +179,9 @@ int linkedList::removeIndex(int index) {
     
     if(index == 0) {
         valAtIndex = removeFront();
-        this->count--;
         return valAtIndex;
-        
     } else if (index >= this->count){
         valAtIndex = removeEnd();
-        this->count--;
         return valAtIndex;
     } else {
         node* currNode = this->head;

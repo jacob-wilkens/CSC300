@@ -10,6 +10,7 @@ int main()
     ll->addFront(4);
     ll->addFront(3);
     ll->addAtIndex(1,5);
+    ll->addAtIndex(1,6);
     ll->display();
     int val = ll->removeIndex(1);
     std::cout << val << " This was deleted"<< "\n";

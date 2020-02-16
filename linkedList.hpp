@@ -18,6 +18,6 @@ class linkedList {
        int removeEnd();
        void addAtIndex(int index, int payload);
        int getIndex(int index);
-       int RemoveIndex(int index);
+       int removeIndex(int index);
 };
 #endif
