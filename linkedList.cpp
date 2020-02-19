@@ -211,16 +211,13 @@ void linkedList::sort(){
     this->lowToHead();
     this->highToEnd();
     int i = 1;
-    int x = 0;
 
-    while(i < this->count - 2){
+    while(i < this->count - 1){
         int val = this->getIndex(i);
         for(int j = i; j <= this->count - 1; j++){
             int currentVal = this->getIndex(j);
-            if(j == this->count - 1 && val != currentVal && index != 0){
-                int lowest = this->getFront();
+            if(j == this->count - 1 && val != currentVal){
                 int removed = this->removeIndex(index);
-
                 this->addAtIndex(i, val);
             }
             if(currentVal < val){
