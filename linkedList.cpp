@@ -201,9 +201,9 @@ void linkedList::sort(){
 
     while(i < this->count){
         int val = this->getIndex(i);
-        for(int j = 0; j <= this->count - 1; j++){
+        for(int j = i; j < this->count; j++){
             int currentVal = this->getIndex(j);
-            if(j == this->count && val != currentVal){
+            if(j == this->count - 1 && val != currentVal){
                 int removed = this->removeIndex(index);
                 this->addAtIndex(i, val);
             }
