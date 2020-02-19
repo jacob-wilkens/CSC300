@@ -194,29 +194,16 @@ void linkedList::displayPointers() {
         currentNode = currentNode->getNextNode();
     }
 }
-int linkedList::lowestValue() {
-    node* currNode = this->head;
-    int lowestVal = this->head->getPayload();
 
-    for(int i = 0; i < this->count; i++){
-        if(currNode->getPayload() < lowestVal){
-            lowestVal = currNode->getPayload();
-        }
-        currNode = currNode->getNextNode();
-    }
-    return lowestVal;
-}
 void linkedList::sort(){
     int index = 0;
-    this->lowToHead();
-    this->highToEnd();
-    int i = 1;
+    int i = 0;
 
-    while(i < this->count - 1){
+    while(i < this->count){
         int val = this->getIndex(i);
-        for(int j = i; j <= this->count - 1; j++){
+        for(int j = 0; j <= this->count - 1; j++){
             int currentVal = this->getIndex(j);
-            if(j == this->count - 1 && val != currentVal){
+            if(j == this->count && val != currentVal){
                 int removed = this->removeIndex(index);
                 this->addAtIndex(i, val);
             }
@@ -228,55 +215,4 @@ void linkedList::sort(){
         i++;
     }
 
-}
-int linkedList::highestValue(){
-    node* currNode = this->head;
-    int highestVal = currNode->getPayload();
-
-    for(int i = 1; i < this->count; i++){
-        currNode = currNode->getNextNode();
-        if(currNode->getPayload() > highestVal){
-            highestVal = currNode->getPayload();
-        }
-    }
-    return highestVal;
-}
-void linkedList::highToEnd(){
-
-    int high = this->highestValue();
-    int end = this->getEnd();
-
-    node* currNode = this->head;
-
-    for(int i = 0; i < this->count; i++){
-        int val = this->getIndex(i);
-        if(val == high){
-            currNode->setPayload(end);
-        }
-        else if(i == this->count - 1){
-            currNode->setPayload(high);
-            break;
-        }
-
-        currNode = currNode->getNextNode();
-    }
-}
-void linkedList::lowToHead(){
-
-    int low = this->lowestValue();
-    int front = this->head->getPayload();
-    node* currNode = this->head;
-
-    for(int i = 0; i < this->count; i++){
-        int val = this->getIndex(i);
-        if(i == 0){
-            this->head->setPayload(low);
-        }
-        else if(val == low){
-            currNode->setPayload(front);
-            break;
-        }
-
-        currNode = currNode->getNextNode();
-    }
 }

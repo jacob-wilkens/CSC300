@@ -7,10 +7,6 @@ class linkedList {
         int count;
         node* head;
         node* runToEndList();
-        int lowestValue();
-        int highestValue();
-        void lowToHead();
-        void highToEnd();
         
     public:
        linkedList();
@@ -26,6 +22,5 @@ class linkedList {
        int removeIndex(int index);
        void displayPointers();
        void sort(); // rearranges the list that it is in ascending numerical order
-       void swap(node* node1, node* node2);
 };
 #endif
