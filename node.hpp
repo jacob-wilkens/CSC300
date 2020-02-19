@@ -10,6 +10,7 @@ class node {
         int getPayload();
         node* getNextNode();
         void setNextNode(node* newNode);
+        void setPayload(int payload);
 
 };
 #endif

@@ -16,3 +16,6 @@ void node::setNextNode(node* newNode) {
 node* node::getNextNode() {
     return this->nextNode;
 }
+void node::setPayload(int payload) {
+    this->payload = payload;
+}

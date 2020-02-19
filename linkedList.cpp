@@ -76,24 +76,6 @@ int linkedList::getEnd() {
 }
 
 int linkedList::removeEnd() {
-     
-    /*int endValue = -1;
-    node* currNode = this->head;
-
-    for(int i = 1; i <= this->count; i++) {
-            
-        if(i == count) {
-            endValue = currNode->getPayload();
-            delete currNode;
-            this->count--;
-            return endValue;
-        }
-
-        currNode = currNode->getNextNode();
-            
-        }
-    return endValue;*/
-
     //we are assuming the list has at least one element in it for now
     //is this a list with a single element in it?
     if(!this->head->getNextNode())
@@ -129,78 +111,175 @@ node* linkedList::runToEndList() {
     return currNode;
 
 }
-void linkedList::addAtIndex(int index, int payload) {
-
-    if(this->count == 0 || index == 0) {
-        this->addFront(payload);
-    } else if (index >= this->count) {
-        this->addEnd(payload);
-    } else {
-        node* newNode = new node(payload);
-        node* currNode = this->head;
-        for(int i = 0; i<= index; i++) {
-            if(i == index - 1) {
-                newNode->setNextNode(currNode->getNextNode());
-                currNode->setNextNode(newNode);
-                this->count++;
-                break;
-            }
+ void linkedList::addAtIndex(int index, int payload)
+ {
+     if(index == 0)
+     {
+         this->addFront(payload);
+     }
+     else if(index == this->count)
+     {
+         this->addEnd(payload);
+     }
+     else
+     {
+         //we are placing somewhere in the middle
+         node* n = new node(payload);
+         node* currNode = this->head;
+         for(int i = 0; i < index-1; i++)
+         {
+             currNode = currNode -> getNextNode();
+         }
+         //currNode points to the node right before where N should be inserted
+         n->setNextNode(currNode->getNextNode());
+         currNode->setNextNode(n);
+         this->count++;
+     }
+     
+ }
+    
+int linkedList::getIndex(int index)
+{
+    if(index == 0)
+    {
+        return this->getFront();
+    }
+    else if(index == this->count-1)
+    {
+        return this->getEnd();
+    }
+    else
+    {
+        node* currNode = this->head; //gives us a second pointers to the front of the list
+        for(int i = 0; i < index; i++)
+        {
             currNode = currNode->getNextNode();
         }
+        return currNode->getPayload();
     }
-    
 }
-int linkedList::getIndex(int index) {
-    int valAtIndex;
-    
-    if(index == 0) {
-        valAtIndex = getFront();
-        return valAtIndex;
+ 
+int linkedList::removeIndex(int index)
+{
+    if(index == 0)
+    {
+        return this->removeFront();
+    }
+    else if(index == this->count-1)
+    {
+        return this->removeEnd();
+    }
+    else
+    {
+        node* currNode = this->head;
+        for(int i = 0; i < index-1; i++)
+        {
+            currNode = currNode->getNextNode();
+        }
+        node* guy2Remove = currNode->getNextNode();
+        currNode->setNextNode(guy2Remove->getNextNode());
+        guy2Remove->setNextNode(0); //sets his next node to null
         
-    } else if (index >= this->count){
-        valAtIndex = getEnd();
-        return valAtIndex;
-    } else {
-        node* currNode = this->head;
-        for(int i = 0; i <= index; i++) {
-            
-            if(i == index) {
-                valAtIndex = currNode->getPayload();
-                return valAtIndex;
-            }
+        int val2Return = guy2Remove->getPayload();
+        delete guy2Remove;
+        this->count--;
+        return val2Return;
+    }
+    
+}
+void linkedList::displayPointers() {
+    node* currentNode = this->head;
+    for(int i = 0; i < this->count; i++) {
+        std::cout << currentNode << "\n";
+        currentNode = currentNode->getNextNode();
+    }
+}
+int linkedList::lowestValue() {
+    node* currNode = this->head;
+    int lowestVal = this->head->getPayload();
 
-            currNode = currNode->getNextNode();
+    for(int i = 0; i < this->count; i++){
+        if(currNode->getPayload() < lowestVal){
+            lowestVal = currNode->getPayload();
+        }
+        currNode = currNode->getNextNode();
+    }
+    return lowestVal;
+}
+void linkedList::sort(){
+    int index = 0;
+    this->lowToHead();
+    this->highToEnd();
+    int i = 1;
+    int x = 0;
+
+    while(i < this->count - 2){
+        int val = this->getIndex(i);
+        for(int j = i; j <= this->count - 1; j++){
+            int currentVal = this->getIndex(j);
+            if(j == this->count - 1 && val != currentVal && index != 0){
+                int lowest = this->getFront();
+                int removed = this->removeIndex(index);
+
+                this->addAtIndex(i, val);
+            }
+            if(currentVal < val){
+                val = currentVal;
+                index = j;
+            }
+        }
+        i++;
+    }
+
+}
+int linkedList::highestValue(){
+    node* currNode = this->head;
+    int highestVal = currNode->getPayload();
+
+    for(int i = 1; i < this->count; i++){
+        currNode = currNode->getNextNode();
+        if(currNode->getPayload() > highestVal){
+            highestVal = currNode->getPayload();
         }
     }
-       
+    return highestVal;
 }
-int linkedList::removeIndex(int index) {
-    int valAtIndex;
-    
-    if(index == 0) {
-        valAtIndex = removeFront();
-        return valAtIndex;
-    } else if (index >= this->count){
-        valAtIndex = removeEnd();
-        return valAtIndex;
-    } else {
-        node* currNode = this->head;
-        node* beforeIndex = NULL;
+void linkedList::highToEnd(){
 
-        for(int i = 0; i <= index; i++) {
-            if(i == index - 1) {
-                beforeIndex = currNode;
-            }
-            if(i == index) {
-                valAtIndex = currNode->getPayload();
-                beforeIndex->setNextNode(currNode->getNextNode());
-                currNode->setNextNode(0);
-                delete currNode;
-                this->count--;
-                return valAtIndex;
+    int high = this->highestValue();
+    int end = this->getEnd();
 
-            }
-            currNode = currNode->getNextNode();
+    node* currNode = this->head;
+
+    for(int i = 0; i < this->count; i++){
+        int val = this->getIndex(i);
+        if(val == high){
+            currNode->setPayload(end);
         }
+        else if(i == this->count - 1){
+            currNode->setPayload(high);
+            break;
+        }
+
+        currNode = currNode->getNextNode();
+    }
+}
+void linkedList::lowToHead(){
+
+    int low = this->lowestValue();
+    int front = this->head->getPayload();
+    node* currNode = this->head;
+
+    for(int i = 0; i < this->count; i++){
+        int val = this->getIndex(i);
+        if(i == 0){
+            this->head->setPayload(low);
+        }
+        else if(val == low){
+            currNode->setPayload(front);
+            break;
+        }
+
+        currNode = currNode->getNextNode();
     }
 }
