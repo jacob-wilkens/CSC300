@@ -203,7 +203,7 @@ void linkedList::displayPointers() {
 }
 
 void linkedList::sort(){
-    int arr[this->count];
+    /*int arr[this->count];
     for(int i = 0; i < this->count; i++){
         int val = this->getIndex(i);
         arr[i] = val;
@@ -211,15 +211,50 @@ void linkedList::sort(){
    for (int i = 0; i < this->count; i++) {
       int min = i;
       for (int j = i + 1; j < this->count; j++)
-         if (arr[j] < arr[min])
+         if (arr[j] < arr[min]){
             min = j;
+         }
       int temp = arr[i];
       arr[i] = arr[min];
       arr[min] = temp;
    }
+
     for(int i = 0; i < this->count; i++){
         this->getNodeAtIndex(i)->setPayload(arr[i]);
-    }
+    }*/
+    if(this->count > 1){
+
+        int curFollowerPos;
+        node* theFollower;
+        node* temp;
+
+        for(int curPos = 1; curPos < this->count; curPos++){
+            curFollowerPos = curPos;
+            theFollower = this->getNodeAtIndex(curPos);
+
+        while(curFollowerPos > 0 ){
+            temp = this->getNodeAtIndex(curFollowerPos - 1);
+
+            if(theFollower->getPayload() < temp->getPayload()){
+                temp->setNextNode(theFollower->getNextNode());
+                theFollower->setNextNode(temp);
+
+                if(curFollowerPos == 1){
+                    this->head = theFollower;
+                } else {
+                    temp = this->getNodeAtIndex(curFollowerPos - 2);
+                    temp->setNextNode(theFollower);
+                }
+                curFollowerPos --;
+            } else{
+                break;
+            }
+
+         }
+        }
+    } 
+
+
 }
 node* linkedList::getNodeAtIndex(int index)
 {

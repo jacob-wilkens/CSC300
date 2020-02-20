@@ -7,7 +7,7 @@ int main()
     std::srand(std::time(nullptr)); // use current time as seed for random generator
     linkedList* ll = new linkedList();
 
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < 15; i++)
     {
         ll->addEnd(std::rand() % 1000);
     }
