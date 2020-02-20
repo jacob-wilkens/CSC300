@@ -1,5 +1,12 @@
 #include "linkedList.hpp"
 #include <iostream>
+template<typename T, size_t n>
+void print_array(T const(& arr)[n])
+{
+	for (size_t i = 0; i < n; i++)
+		std::cout << arr[i] << ' ';
+}
+
 
 linkedList::linkedList() {
     this->count = 0;
@@ -196,23 +203,37 @@ void linkedList::displayPointers() {
 }
 
 void linkedList::sort(){
-    int index = 0;
-    int i = 0;
-
-    while(i < this->count){
+    int arr[this->count];
+    for(int i = 0; i < this->count; i++){
         int val = this->getIndex(i);
-        for(int j = i; j < this->count; j++){
-            int currentVal = this->getIndex(j);
-            if(j == this->count - 1 && val != currentVal){
-                int removed = this->removeIndex(index);
-                this->addAtIndex(i, val);
-            }
-            if(currentVal < val){
-                val = currentVal;
-                index = j;
-            }
-        }
-        i++;
+        arr[i] = val;
     }
-
+   for (int i = 0; i < this->count; i++) {
+      int min = i;
+      for (int j = i + 1; j < this->count; j++)
+         if (arr[j] < arr[min])
+            min = j;
+      int temp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = temp;
+   }
+    for(int i = 0; i < this->count; i++){
+        this->getNodeAtIndex(i)->setPayload(arr[i]);
+    }
+}
+node* linkedList::getNodeAtIndex(int index)
+{
+    if(index == 0)
+    {
+        return this->head;
+    }
+    else
+    {
+        node* currNode = this->head; //gives us a second pointers to the front of the list
+        for(int i = 0; i < index; i++)
+        {
+            currNode = currNode->getNextNode();
+        }
+        return currNode;
+    }
 }

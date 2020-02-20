@@ -22,5 +22,6 @@ class linkedList {
        int removeIndex(int index);
        void displayPointers();
        void sort(); // rearranges the list that it is in ascending numerical order
+       node* getNodeAtIndex(int index);
 };
 #endif

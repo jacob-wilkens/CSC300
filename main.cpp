@@ -1,18 +1,20 @@
-#include <iostream>
-#include <string>
 #include "linkedList.hpp"
-#include "ctime"
-
-using namespace std;
+#include <iostream>
+#include <ctime>
 
 int main()
-{   
+{
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
     linkedList* ll = new linkedList();
-    for(int i = 1; i<= 66; i+=2){
-        ll->addFront(i);
+
+    for(int i = 0; i < 9; i++)
+    {
+        ll->addEnd(std::rand() % 1000);
     }
     ll->display();
+    std::cout << "\n";
     ll->sort();
-    std::cout << "sorted " << "\n";
-    ll->display();
+    std::cout << "\n";
+    ll->display(); //it should now be sorted
+
 }
